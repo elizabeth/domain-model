@@ -59,6 +59,8 @@ public class Job {
 // Person
 //
 public class Person {
+    static let NONE = Person(fn: "(NONE)", ln:"(NONE)")
+    
   public var firstName : String = ""
   public var lastName : String = ""
   public var age : Int = 0
@@ -69,8 +71,17 @@ public class Person {
     }
   }
   
+    public var _spouse : Person? = nil
   public var spouse : Person? {
-    get { }
+    get {
+        if _spouse == nil {
+            return Person.NONE
+        }
+        else {
+            return _spouse!
+        }
+        
+    }
     set(value) {
     }
   }
