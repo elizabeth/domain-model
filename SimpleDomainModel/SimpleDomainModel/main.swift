@@ -14,8 +14,8 @@ public func testMe() -> String {
   return "I have been tested"
 }
 
-public class TestMe {
-  public func Please() -> String {
+open class TestMe {
+  open func Please() -> String {
     return "I have been tested"
   }
 }
@@ -27,19 +27,22 @@ public struct Money {
   public var amount : Int
   public var currency : String
   
-  public func convert(to: String) -> Money {
+  public func convert(_ to: String) -> Money {
   }
   
-  public func add(to: Money) -> Money {
+  public func add(_ to: Money) -> Money {
   }
-  public func subtract(from: Money) -> Money {
+  public func subtract(_ from: Money) -> Money {
   }
 }
 
 ////////////////////////////////////
 // Job
 //
-public class Job {
+open class Job {
+  fileprivate var title : String
+  fileprivate var type : JobType
+
   public enum JobType {
     case Hourly(Double)
     case Salary(Int)
@@ -48,40 +51,31 @@ public class Job {
   public init(title : String, type : JobType) {
   }
   
-  public func calculateIncome(hours: Int) -> Int {
+  open func calculateIncome(_ hours: Int) -> Int {
   }
   
-  public func raise(amt : Double) {
+  open func raise(_ amt : Double) {
   }
 }
 
 ////////////////////////////////////
 // Person
 //
-public class Person {
-    static let NONE = Person(fn: "(NONE)", ln:"(NONE)")
-    
-  public var firstName : String = ""
-  public var lastName : String = ""
-  public var age : Int = 0
+open class Person {
+  open var firstName : String = ""
+  open var lastName : String = ""
+  open var age : Int = 0
 
-  public var job : Job? {
+  fileprivate var _job : Job? = nil
+  open var job : Job? {
     get { }
     set(value) {
     }
   }
   
-    public var _spouse : Person? = nil
-  public var spouse : Person? {
-    get {
-        if _spouse == nil {
-            return Person.NONE
-        }
-        else {
-            return _spouse!
-        }
-        
-    }
+  fileprivate var _spouse : Person? = nil
+  open var spouse : Person? {
+    get { }
     set(value) {
     }
   }
@@ -92,23 +86,23 @@ public class Person {
     self.age = age
   }
   
-  public func toString() -> String {
+  open func toString() -> String {
   }
 }
 
 ////////////////////////////////////
 // Family
 //
-public class Family {
-  private var members : [Person] = []
+open class Family {
+  fileprivate var members : [Person] = []
   
   public init(spouse1: Person, spouse2: Person) {
   }
   
-  public func haveChild(child: Person) -> Bool {
+  open func haveChild(_ child: Person) -> Bool {
   }
   
-  public func householdIncome() -> Int {
+  open func householdIncome() -> Int {
   }
 }
 
