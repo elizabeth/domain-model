@@ -156,6 +156,9 @@ open class Job {
     case .Salary(let salaryNum): {
       return salaryNum
     }
+    default: {
+      return 0
+    }
   }
   
   open func raise(_ amt : Double) {
