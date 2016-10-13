@@ -34,89 +34,97 @@ public struct Money {
     case CAN
   }
   
-  mutating public func convert(_ to: curren) -> Money {
+  public func convert(_ to: curren) -> Money {
+    var newAmount : Int
+    var newCurrency : curren
+    
     switch currency {
-      case .USD:
-        switch to {
-          case .GBP:
-            amount = Int((Double(amount) * 0.5) * 100)
-            currency = .GBP
-          case .EUR:
-            amount = Int((Double(amount) * 1.5) * 100)
-            currency = .EUR
-          case .CAN:
-            amount = Int((Double(amount) * 1.25) * 100)
-            currency = .CAN
-          default: 
-            break
-        }
-        
+    case .USD:
+      switch to {
       case .GBP:
-        switch to {
-          case .USD:
-            amount = Int((Double(amount) * 2) * 100)
-            currency = .USD
-          case .EUR:
-            amount = 
-            currency = .EUR
-          case .CAN:
-            amount =
-            currency = .CAN
-          default: 
-            break
-        }
-        
+        newAmount = Int((Double(amount) * 0.5) * 100)
+        newCurrency = .GBP
       case .EUR:
-        switch to {
-          case .USD:
-            amount = Int((Double(amount) * (2/3)) * 100)
-            currency = .USD
-          case .GBP:
-            amount = 
-            currency = .GBP
-          case .CAN:
-            amount =
-            currency = .CAN
-          default: 
-            break
-        }
-        
+        newAmount = Int((Double(amount) * 1.5) * 100)
+        newCurrency = .EUR
       case .CAN:
-        switch to {
-          case .USD:
-            amount = Int((Double(amount) * 0.8) * 100)
-            currency = .USD
-          case .GBP:
-            amount = 
-            currency = .GBP
-          case .EUR:
-            amount =
-            currency = .EUR
-          default: 
-            break
-        }
-        
+        newAmount = Int((Double(amount) * 1.25) * 100)
+        newCurrency = .CAN
       default:
         break
+      }
+        
+    case .GBP:
+      switch to {
+      case .USD:
+        newAmount = Int((Double(amount) * 2) * 100)
+        newCurrency = .USD
+      case .EUR:
+        newAmount =
+        newCurrency = .EUR
+      case .CAN:
+        newAmount =
+        newCurrency = .CAN
+      default:
+        break
+      }
+        
+    case .EUR:
+      switch to {
+      case .USD:
+        newAmount = Int((Double(amount) * (2/3)) * 100)
+        newCurrency = .USD
+      case .GBP:
+        newAmount =
+        newCurrency = .GBP
+      case .CAN:
+        newAmount =
+        newCurrency = .CAN
+      default:
+        break
+      }
+        
+    case .CAN:
+      switch to {
+      case .USD:
+        newAmount = Int((Double(amount) * 0.8) * 100)
+        newCurrency = .USD
+      case .GBP:
+        newAmount =
+        newCurrency = .GBP
+      case .EUR:
+        newAmount =
+        newCurrency = .EUR
+      default:
+        break
+      }
+        
+    default:
+      break
     }
     
-    return self
+    return Money(amount: amount, currency: newCurrency)
   
   }
   
   public func add(_ to: Money) -> Money {
-    var adding = to
-    if to.currency != currency {
-      var addingCurrency = adding.convert(self.currency)
+    var orig = self
+    if currency != to.currency {
+      orig = orig.convert(to.currency)
     }
+    
+    let newAmount = orig.amount + to.amount
+    return Money(amount: newAmount, currency: currency)
   }
   
-  
   public func subtract(_ from: Money) -> Money {
-    if from.currency != currency {
-        
+    var orig = self
+    if currency != from.currency {
+      orig = orig.convert(from.currency)
     }
-      
+    
+    let newAmount = from.amount - orig.amount
+    return Money(amount: newAmount, currency: from.currency)
   }
   
 }
@@ -141,8 +149,12 @@ open class Job {
   }
   
   open func calculateIncome(_ hours: Int) -> Int {
-    if type == .Hourly {
-        return type*Int(hours)
+    switch type {
+    case .Hourly(let hourNum):
+      return Int((hourNum * Double(hours)) * 100)
+    }
+    case .Salary(let salaryNum): {
+      return salaryNum
     }
   }
   
