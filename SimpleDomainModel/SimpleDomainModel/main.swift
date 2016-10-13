@@ -24,22 +24,109 @@ open class TestMe {
 // Money
 //
 public struct Money {
-  public var amount : Int
-  public var currency : String
+  public var amount : Int   // in pennies
+  public var currency : curren
   
-  public func convert(_ to: String) -> Money {
+  public enum curren {
+    case USD
+    case GBP
+    case EUR
+    case CAN
+  }
+  
+  mutating public func convert(_ to: curren) -> Money {
+    switch currency {
+      case .USD:
+        switch to {
+          case .GBP:
+            amount = Int((Double(amount) * 0.5) * 100)
+            currency = .GBP
+          case .EUR:
+            amount = Int((Double(amount) * 1.5) * 100)
+            currency = .EUR
+          case .CAN:
+            amount = Int((Double(amount) * 1.25) * 100)
+            currency = .CAN
+          default: 
+            break
+        }
+        
+      case .GBP:
+        switch to {
+          case .USD:
+            amount = Int((Double(amount) * 2) * 100)
+            currency = .USD
+          case .EUR:
+            amount = 
+            currency = .EUR
+          case .CAN:
+            amount =
+            currency = .CAN
+          default: 
+            break
+        }
+        
+      case .EUR:
+        switch to {
+          case .USD:
+            amount = Int((Double(amount) * (2/3)) * 100)
+            currency = .USD
+          case .GBP:
+            amount = 
+            currency = .GBP
+          case .CAN:
+            amount =
+            currency = .CAN
+          default: 
+            break
+        }
+        
+      case .CAN:
+        switch to {
+          case .USD:
+            amount = Int((Double(amount) * 0.8) * 100)
+            currency = .USD
+          case .GBP:
+            amount = 
+            currency = .GBP
+          case .EUR:
+            amount =
+            currency = .EUR
+          default: 
+            break
+        }
+        
+      default:
+        break
+    }
+    
+    return self
+  
   }
   
   public func add(_ to: Money) -> Money {
+    var adding = to
+    if to.currency != currency {
+      var addingCurrency = adding.convert(self.currency)
+    }
   }
+  
+  
   public func subtract(_ from: Money) -> Money {
+    if from.currency != currency {
+        
+    }
+      
   }
+  
 }
 
 ////////////////////////////////////
 // Job
 //
 open class Job {
+  static let NONE = Job(title: "(NONE)", type: .Hourly(0))
+
   fileprivate var title : String
   fileprivate var type : JobType
 
@@ -49,12 +136,18 @@ open class Job {
   }
   
   public init(title : String, type : JobType) {
+    self.title = title
+    self.type = type
   }
   
   open func calculateIncome(_ hours: Int) -> Int {
+    if type == .Hourly {
+        return type*Int(hours)
+    }
   }
   
   open func raise(_ amt : Double) {
+    
   }
 }
 
@@ -62,21 +155,44 @@ open class Job {
 // Person
 //
 open class Person {
+  static let NONE = Person(firstName: "(NONE)", lastName: "(NONE)", age: 0)
+
   open var firstName : String = ""
   open var lastName : String = ""
   open var age : Int = 0
 
   fileprivate var _job : Job? = nil
   open var job : Job? {
-    get { }
+    get {
+      if _job == nil {
+          return job.NONE
+      } else {
+        return _job!  
+      }    
+    }
+    
     set(value) {
+      if age >= 16 {
+        self.job = value
+      }
     }
   }
   
   fileprivate var _spouse : Person? = nil
   open var spouse : Person? {
-    get { }
+    get {
+      if _spouse == nil {
+        return Person.NONE
+      }
+      else {
+        return _spouse!
+      }
+    }
+    
     set(value) {
+      if age >= 18 {
+        _spouse = value
+      }
     }
   }
   
@@ -105,8 +221,3 @@ open class Family {
   open func householdIncome() -> Int {
   }
 }
-
-
-
-
-
