@@ -71,7 +71,7 @@ public struct Money {
       }
 
       let newAmount = orig.amount + to.amount
-      return Money(amount: newAmount, currency: currency)
+      return Money(amount: newAmount, currency: to.currency)
     }
 
     public func subtract(_ from: Money) -> Money {
