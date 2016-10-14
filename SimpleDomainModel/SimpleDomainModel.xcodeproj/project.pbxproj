@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9D1300E41DB057DD0089668B /* JobTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE68912B1CB5FDC60018C340 /* JobTests.swift */; };
 		9D4443061DB06874007C863A /* MoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE68912D1CB5FEC70018C340 /* MoneyTests.swift */; };
+		9D4443071DB06D18007C863A /* PersonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE68912F1CB6023B0018C340 /* PersonTests.swift */; };
 		FE6891181CB5D8E40018C340 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6891171CB5D8E40018C340 /* main.swift */; };
 		FE6891251CB5D90B0018C340 /* SimpleDomainModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6891241CB5D90B0018C340 /* SimpleDomainModelTests.swift */; };
 		FE68912A1CB5D9130018C340 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6891171CB5D8E40018C340 /* main.swift */; };
@@ -193,6 +194,7 @@
 			files = (
 				9D1300E41DB057DD0089668B /* JobTests.swift in Sources */,
 				FE68912A1CB5D9130018C340 /* main.swift in Sources */,
+				9D4443071DB06D18007C863A /* PersonTests.swift in Sources */,
 				9D4443061DB06874007C863A /* MoneyTests.swift in Sources */,
 				FE6891251CB5D90B0018C340 /* SimpleDomainModelTests.swift in Sources */,
 			);

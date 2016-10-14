@@ -89,8 +89,6 @@ public struct Money {
 // Job
 //
 open class Job {
-    static let NONE = Job(title: "(NONE)", type: .Hourly(0))
-    
     fileprivate var title : String
     fileprivate var type : JobType
     
@@ -127,8 +125,6 @@ open class Job {
 // Person
 
 open class Person {
-    static let NONE = Person(firstName: "(NONE)", lastName: "(NONE)", age: 0)
-    
     open var firstName : String = ""
     open var lastName : String = ""
     open var age : Int = 0
@@ -136,16 +132,12 @@ open class Person {
     fileprivate var _job : Job? = nil
     open var job : Job? {
         get {
-            if _job == nil {
-                return Job.NONE
-            } else {
-                return _job!
-            }
+            return _job
         }
         
         set(value) {
             if age >= 16 {
-                self.job = value
+                _job = value
             }
         }
     }
@@ -153,12 +145,7 @@ open class Person {
     fileprivate var _spouse : Person? = nil
     open var spouse : Person? {
         get {
-            if _spouse == nil {
-                return Person.NONE
-            }
-            else {
-                return _spouse!
-            }
+            return _spouse
         }
         
         set(value) {
@@ -175,22 +162,36 @@ open class Person {
     }
     
     open func toString() -> String {
-        return "[Person: firstName:/(firstName) lastName:/(lastName) age:/(age) job:nil spouse:nil]"
+        return "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) job:\(job) spouse:\(spouse)]"
     }
 }
 
 ////////////////////////////////////
 // Family
 
-//open class Family {
-//    fileprivate var members : [Person] = []
-//    
-//    public init(spouse1: Person, spouse2: Person) {
-//    }
-//    
-//    open func haveChild(_ child: Person) -> Bool {
-//    }
-//    
-//    open func householdIncome() -> Int {
-//    }
-//}
+open class Family {
+    fileprivate var members : [Person] = []
+    let hoursInYear = 2000 // number of hours in a year
+    
+    public init(spouse1: Person, spouse2: Person) {
+        spouse1.spouse = spouse2
+        spouse2.spouse = spouse1
+        members.append(spouse1)
+        members.append(spouse2)
+    }
+    
+    open func haveChild(_ child: Person) -> Bool {
+        return true
+    }
+    
+    open func householdIncome() -> Int {
+        var total = 0
+        for member in members {
+            if member.job != nil {
+                total += member.calculateIncome(hoursInYear)
+            }
+        }
+        
+        return 0
+    }
+}
