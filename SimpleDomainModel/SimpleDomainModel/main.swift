@@ -22,112 +22,68 @@ open class TestMe {
 
 ////////////////////////////////////
 // Money
-//
-//public struct Money {
-//  public var amount : Int   // in pennies
-//  public var currency : curren
-//
-//  public enum curren {
-//    case USD
-//    case GBP
-//    case EUR
-//    case CAN
-//  }
-//
-//  public func convert(_ to: curren) -> Money {
-//    var newAmount : Int
-//    var newCurrency : curren
-//
-//    switch currency {
-//    case .USD:
-//      switch to {
-//      case .GBP:
-//        newAmount = Int((Double(amount) * 0.5) * 100)
-//        newCurrency = .GBP
-//      case .EUR:
-//        newAmount = Int((Double(amount) * 1.5) * 100)
-//        newCurrency = .EUR
-//      case .CAN:
-//        newAmount = Int((Double(amount) * 1.25) * 100)
-//        newCurrency = .CAN
-//      default:
-//        break
-//      }
-//
-//    case .GBP:
-//      switch to {
-//      case .USD:
-//        newAmount = Int((Double(amount) * 2) * 100)
-//        newCurrency = .USD
-//      case .EUR:
-//        newAmount =
-//        newCurrency = .EUR
-//      case .CAN:
-//        newAmount =
-//        newCurrency = .CAN
-//      default:
-//        break
-//      }
-//
-//    case .EUR:
-//      switch to {
-//      case .USD:
-//        newAmount = Int((Double(amount) * (2/3)) * 100)
-//        newCurrency = .USD
-//      case .GBP:
-//        newAmount =
-//        newCurrency = .GBP
-//      case .CAN:
-//        newAmount =
-//        newCurrency = .CAN
-//      default:
-//        break
-//      }
-//
-//    case .CAN:
-//      switch to {
-//      case .USD:
-//        newAmount = Int((Double(amount) * 0.8) * 100)
-//        newCurrency = .USD
-//      case .GBP:
-//        newAmount =
-//        newCurrency = .GBP
-//      case .EUR:
-//        newAmount =
-//        newCurrency = .EUR
-//      default:
-//        break
-//      }
-//
-//    default:
-//      break
-//    }
-//
-//    return Money(amount: newAmount, currency: newCurrency)
-//
-//  }
-//
-//  public func add(_ to: Money) -> Money {
-//    var orig = self
-//    if currency != to.currency {
-//      orig = orig.convert(to.currency)
-//    }
-//
-//    let newAmount = orig.amount + to.amount
-//    return Money(amount: newAmount, currency: currency)
-//  }
-//
-//  public func subtract(_ from: Money) -> Money {
-//    var orig = self
-//    if currency != from.currency {
-//      orig = orig.convert(from.currency)
-//    }
-//
-//    let newAmount = from.amount - orig.amount
-//    return Money(amount: newAmount, currency: from.currency)
-//  }
-//
-//}
+
+public struct Money {
+    public var amount : Int   // in pennies
+    public var currency : currencyType
+
+    public enum currencyType {
+      case USD
+      case GBP
+      case EUR
+      case CAN
+    }
+    
+    private func convertUSD(_ to: currencyType) -> Int {
+        switch currency {
+        case .USD:
+            return amount
+        case .GBP:
+            return amount * 2
+        case .EUR:
+            return amount * 2 / 3
+        case .CAN:
+            return amount * 4 / 5
+        }
+    }
+
+    public func convert(_ to: currencyType) -> Money {
+      var newAmount = convertUSD(to)
+
+      switch to {
+      case .USD:
+        break
+      case .GBP:
+        newAmount = newAmount / 2
+      case .EUR:
+        newAmount = newAmount * 3 / 2
+      case .CAN:
+        newAmount = newAmount * 5 / 4
+      }
+
+      return Money(amount: newAmount, currency: to)
+    }
+
+    public func add(_ to: Money) -> Money {
+      var orig = self
+      if currency != to.currency {
+        orig = orig.convert(to.currency)
+      }
+
+      let newAmount = orig.amount + to.amount
+      return Money(amount: newAmount, currency: currency)
+    }
+
+    public func subtract(_ from: Money) -> Money {
+      var orig = self
+      if currency != from.currency {
+        orig = orig.convert(from.currency)
+      }
+
+      let newAmount = from.amount - orig.amount
+      return Money(amount: newAmount, currency: from.currency)
+    }
+}
 
 ////////////////////////////////////
 // Job
@@ -226,15 +182,15 @@ open class Person {
 ////////////////////////////////////
 // Family
 
-open class Family {
-    fileprivate var members : [Person] = []
-    
-    public init(spouse1: Person, spouse2: Person) {
-    }
-    
-    open func haveChild(_ child: Person) -> Bool {
-    }
-    
-    open func householdIncome() -> Int {
-    }
-}
+//open class Family {
+//    fileprivate var members : [Person] = []
+//    
+//    public init(spouse1: Person, spouse2: Person) {
+//    }
+//    
+//    open func haveChild(_ child: Person) -> Bool {
+//    }
+//    
+//    open func householdIncome() -> Int {
+//    }
+//}
