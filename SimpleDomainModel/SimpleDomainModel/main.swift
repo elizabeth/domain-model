@@ -21,7 +21,7 @@ open class TestMe {
 }
 
 ////////////////////////////////////
-// Money
+// Moneya
 
 public struct Money {
     public var amount : Int   // in pennies
@@ -174,24 +174,33 @@ open class Family {
     let hoursInYear = 2000 // number of hours in a year
     
     public init(spouse1: Person, spouse2: Person) {
-        spouse1.spouse = spouse2
-        spouse2.spouse = spouse1
-        members.append(spouse1)
-        members.append(spouse2)
+        if spouse1.spouse != nil && spouse2.spouse != nil {
+            spouse1.spouse = spouse2
+            spouse2.spouse = spouse1
+            members.append(spouse1)
+            members.append(spouse2)
+        }
     }
     
     open func haveChild(_ child: Person) -> Bool {
-        return true
+        for member in members {
+            if member.age >= 21 {
+                members.append(child)
+                return true
+            }
+        }
+        return false
     }
     
     open func householdIncome() -> Int {
         var total = 0
         for member in members {
-            if member.job != nil {
-                total += member.calculateIncome(hoursInYear)
+            let job = member.job
+            if job != nil {
+                total += job!.calculateIncome(hoursInYear)
             }
         }
         
-        return 0
+        return total
     }
 }
