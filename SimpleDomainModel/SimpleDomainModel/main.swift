@@ -24,7 +24,7 @@ open class TestMe {
 // Moneya
 
 public struct Money {
-    public var amount : Int   // in pennies
+    public var amount : Int
     public var currency : currencyType
 
     public enum currencyType {
