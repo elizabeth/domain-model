@@ -28,10 +28,10 @@ public struct Money {
     public var currency : currencyType
 
     public enum currencyType {
-      case USD
-      case GBP
-      case EUR
-      case CAN
+        case USD
+        case GBP
+        case EUR
+        case CAN
     }
     
     private func convertUSD(_ to: currencyType) -> Int {
@@ -48,40 +48,40 @@ public struct Money {
     }
 
     public func convert(_ to: currencyType) -> Money {
-      var newAmount = convertUSD(to)
+        var newAmount = convertUSD(to)
 
-      switch to {
-      case .USD:
-        break
-      case .GBP:
-        newAmount = newAmount / 2
-      case .EUR:
-        newAmount = newAmount * 3 / 2
-      case .CAN:
-        newAmount = newAmount * 5 / 4
-      }
+        switch to {
+        case .USD:
+            break
+        case .GBP:
+            newAmount = newAmount / 2
+        case .EUR:
+            newAmount = newAmount * 3 / 2
+        case .CAN:
+            newAmount = newAmount * 5 / 4
+        }
 
-      return Money(amount: newAmount, currency: to)
+        return Money(amount: newAmount, currency: to)
     }
 
     public func add(_ to: Money) -> Money {
-      var orig = self
-      if currency != to.currency {
-        orig = orig.convert(to.currency)
-      }
+        var orig = self
+        if currency != to.currency {
+          orig = orig.convert(to.currency)
+        }
 
-      let newAmount = orig.amount + to.amount
-      return Money(amount: newAmount, currency: to.currency)
+        let newAmount = orig.amount + to.amount
+        return Money(amount: newAmount, currency: to.currency)
     }
 
     public func subtract(_ from: Money) -> Money {
-      var orig = self
-      if currency != from.currency {
-        orig = orig.convert(from.currency)
-      }
+        var orig = self
+        if currency != from.currency {
+          orig = orig.convert(from.currency)
+        }
 
-      let newAmount = from.amount - orig.amount
-      return Money(amount: newAmount, currency: from.currency)
+        let newAmount = from.amount - orig.amount
+        return Money(amount: newAmount, currency: from.currency)
     }
 }
 
